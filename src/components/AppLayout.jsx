@@ -1,5 +1,7 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
+import Logo from "./Logo";
+import AccountStatus from "./AccountStatus";
 
 const Container = styled.div`
   height: 100vh;
@@ -9,6 +11,10 @@ const Container = styled.div`
 
   header {
     flex-shrink: 0;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   main {
@@ -20,7 +26,10 @@ const Container = styled.div`
 const AppLayout = () => {
   return (
     <Container>
-      <header>header</header>
+      <header>
+        <Logo />
+        <AccountStatus />
+      </header>
       <main>
         <Outlet />
       </main>
