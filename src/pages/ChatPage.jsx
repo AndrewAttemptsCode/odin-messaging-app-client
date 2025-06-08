@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import ChatConvo from "../components/ChatConvo";
+import ChatMessage from "../components/ChatMessage";
 
 const Container = styled.div`
   height: 100%;
@@ -17,6 +19,8 @@ const Container = styled.div`
   main {
     grid-area: main;
     border: 2px solid green;
+    display: flex;
+    flex-direction: column;
   }
 `
 
@@ -29,7 +33,8 @@ const ChatPage = () => {
           ))}
       </aside>
       <main>
-        main
+        <ChatConvo />
+        <ChatMessage />
       </main>
     </Container>
   );
