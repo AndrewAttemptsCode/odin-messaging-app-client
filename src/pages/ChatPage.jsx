@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import ChatConvo from "../components/ChatConvo";
 import ChatMessage from "../components/ChatMessage";
+import ChatUserList from "../components/ChatUserList";
 
 const Container = styled.div`
   height: 100%;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 200px 1fr;
   grid-template-areas: "aside main";
   border: 2px solid red;
 
@@ -28,9 +29,7 @@ const ChatPage = () => {
   return (
     <Container>
       <aside>
-        {[...Array(100)].map((_, i) => (
-            <p key={i}>This is a sidebar test {i + 1}</p>
-          ))}
+        <ChatUserList />
       </aside>
       <main>
         <ChatConvo />
