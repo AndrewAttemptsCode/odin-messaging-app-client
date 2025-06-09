@@ -1,6 +1,7 @@
 import { ChevronUp } from "lucide-react";
 import { useState } from "react";
 import styled from "styled-components";
+import ChatList from "./ChatList";
 
 const Header = styled.div`
   display: flex;
@@ -21,10 +22,11 @@ const ChatUserList = () => {
     <div>
       <Header onClick={() => setExpanded(!expanded)}>
         <h1>Users</h1>
-        <IconWrapper $expanded={expanded} >
+        <IconWrapper $expanded={expanded}>
           <ChevronUp size={30} />
         </IconWrapper>
       </Header>
+      {expanded && <ChatList />}
     </div>
   );
 };
