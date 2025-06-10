@@ -25,9 +25,12 @@ const Form = styled.form`
 
   input, button {
     padding: 8px;
-    margin-bottom: 1rem;
     width: 100%;
     border: none;
+  }
+
+  input {
+    margin-bottom: 1.5rem;
   }
 
   input:focus {
@@ -50,7 +53,8 @@ const InputWrapper = styled.div`
 
   input:focus + label,
   input:not(:placeholder-shown) + label {
-    transform: translate(-4px, -20px) scale(0.9);
+    transform: translate(-4px, -18px);
+    font-size: 0.75rem;
     padding: 1px 4px;
     border-radius: 5px;
     background-color: white;
