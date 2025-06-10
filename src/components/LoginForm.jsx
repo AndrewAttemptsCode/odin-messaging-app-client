@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -29,10 +30,6 @@ const Form = styled.form`
     border: none;
   }
 
-  input {
-    margin-bottom: 1.5rem;
-  }
-
   input:focus {
     outline: 2px solid #038620;
   }
@@ -40,6 +37,7 @@ const Form = styled.form`
 
 const InputWrapper = styled.div`
   position: relative;
+  margin-bottom: 1.5rem;
 
   label {
     position: absolute;
@@ -63,20 +61,69 @@ const InputWrapper = styled.div`
 `
 
 const LoginForm = () => {
+  const [userData, setUserData] = useState({username: "", password: ""});
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState([{}]);
+  const navigate = useNavigate();
+
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
+    setUserData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      setLoading(true);
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      })
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (Array.isArray(data.errors)) {
+          setErrors(data.errors);
+        } else {
+          setErrors([{ path: "general", msg: data.message }])
+        }
+        return;
+      }
+
+      localStorage.setItem("token", data);
+      navigate("/");
+
+    } catch (error) {
+      console.error("Error logging in", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <Container>
       <h1>Login</h1>
-      <Form action="">
+      <Form onSubmit={handleSubmit}>
         <InputWrapper>
-          <input type="text" name="username" id="username" placeholder="" />
+          <input type="text" name="username" id="username" placeholder="" value={userData.username} onChange={handleOnChange} />
           <label htmlFor="username">Username</label>
+        <p>{ errors?.find(error => error.path === "username")?.msg }</p>
         </InputWrapper>
         <InputWrapper>
-          <input type="password" name="password" id="password" placeholder="" />
+          <input type="password" name="password" id="password" placeholder="" value={userData.password} onChange={handleOnChange} />
           <label htmlFor="password">Password</label>
+          <p>{ errors?.find(error => error.path === "password")?.msg }</p>
+          <p>{ errors?.find(error => error.path === "general")?.msg }</p>
         </InputWrapper>
         <p>Need an account? <Link to={"/register"}>Register</Link></p>
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading}>{ loading ? "Processing..." : "Login" }</button>
       </Form>
     </Container>
   );
