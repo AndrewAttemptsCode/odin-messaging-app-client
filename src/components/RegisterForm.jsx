@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import AccountCreatedNotice from "./AccountCreatedNotice";
 
 const Container = styled.div`
   min-width: 320px;
@@ -29,10 +31,6 @@ const Form = styled.form`
     border: none;
   }
 
-  input {
-    margin-bottom: 1.5rem;
-  }
-
   input:focus {
     outline: 2px solid #038620;
   }
@@ -40,6 +38,7 @@ const Form = styled.form`
 
 const InputWrapper = styled.div`
   position: relative;
+  margin-bottom: 1.5rem;
 
   label {
     position: absolute;
@@ -63,24 +62,79 @@ const InputWrapper = styled.div`
 `
 
 const RegisterForm = () => {
+  const [userData, setUserData] = useState({username: "", password: "", confirmPassword: ""});
+  const [loading, setLoading] = useState(false);
+  const [accountCreated, setAccountCreated] = useState(false);
+  const [errors, setErrors] = useState([{}]);
+
+  const handleOnChange = (event) => {
+    const { name, value } = event.target;
+    setUserData((prev) => ({
+        ...prev,
+        [name]: value,
+    }));
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      setLoading(true);
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/users`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userData),
+      })
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (Array.isArray(data.errors)) {
+          setErrors(data.errors);
+        } else {
+          setErrors([{ path: "general", msg: "Internal server error" }]);
+        }
+        return;
+      }
+
+      if (data.msg === "success") {
+        setAccountCreated(true);
+      }
+
+    } catch (error) {
+      console.error("Failed to create user", error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (accountCreated) {
+    return <AccountCreatedNotice user={userData} />;
+  }
+
   return (
     <Container>
       <h1>Register</h1>
-      <Form action="">
+      <Form onSubmit={handleSubmit}>
         <InputWrapper>
-          <input type="text" name="username" id="username" placeholder="" />
+          <input type="text" name="username" id="username" placeholder="" value={userData.username} onChange={handleOnChange} />
           <label htmlFor="username">Username</label>
+          <p>{ errors?.find(error => error.path === "username")?.msg }</p>
         </InputWrapper>
         <InputWrapper>
-          <input type="password" name="password" id="password" placeholder="" />
+          <input type="password" name="password" id="password" placeholder="" value={userData.password} onChange={handleOnChange} />
           <label htmlFor="password">Password</label>
+          <p>{ errors?.find(error => error.path === "password")?.msg }</p>
         </InputWrapper>
         <InputWrapper>
-          <input type="password" name="confirmPassword" id="confirmPassword" placeholder="" />
+          <input type="password" name="confirmPassword" id="confirmPassword" placeholder="" value={userData.confirmPassword} onChange={handleOnChange} />
           <label htmlFor="confirmPassword">Confirm Password</label>
+          <p>{ errors?.find(error => error.path === "confirmPassword")?.msg }</p>
+          <p>{ errors?.find(error => error.path === "general")?.msg }</p>
         </InputWrapper>
         <p>Already have an account? <Link to={"/login"}>Login</Link></p>
-        <button type="submit">Register</button>
+        <button type="submit" disabled={loading}>{ loading ? "Processing..." : "Register" }</button>
       </Form>
     </Container>
   );
