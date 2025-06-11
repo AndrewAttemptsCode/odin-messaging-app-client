@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "./Logo";
 import AccountStatus from "./AccountStatus";
+import AuthProvider from "../contexts/AuthContext";
 
 const Container = styled.div`
   height: 100vh;
@@ -25,15 +26,17 @@ const Container = styled.div`
 
 const AppLayout = () => {
   return (
-    <Container>
-      <header>
-        <Logo />
-        <AccountStatus />
-      </header>
-      <main>
-        <Outlet />
-      </main>
-    </Container>
+    <AuthProvider>
+      <Container>
+        <header>
+          <Logo />
+          <AccountStatus />
+        </header>
+        <main>
+          <Outlet />
+        </main>
+      </Container>
+    </AuthProvider>
   );
 };
 
