@@ -2,6 +2,9 @@ import styled from "styled-components";
 import ChatConvo from "../components/ChatConvo";
 import ChatMessage from "../components/ChatMessage";
 import ChatUserList from "../components/ChatUserList";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   height: 100%;
@@ -26,6 +29,19 @@ const Container = styled.div`
 `
 
 const ChatPage = () => {
+  const navigate = useNavigate();
+  const { isAuthorized } = useContext(AuthContext);
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    
+    if (!storedToken) {
+      navigate("/login");
+    }
+
+    isAuthorized();
+  }, [isAuthorized, navigate]);
+
   return (
     <Container>
       <aside>

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import LoginForm from "../components/LoginForm";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -11,6 +13,17 @@ const Container = styled.div`
 `
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+
+    if (storedToken) {
+      navigate("/");
+    }
+
+  }, [navigate]);
+
   return (
     <Container>
       <LoginForm />
