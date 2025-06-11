@@ -99,6 +99,10 @@ const RegisterForm = () => {
       }
 
       if (data.msg === "success") {
+        const storedToken = localStorage.getItem("token");
+        if (storedToken) {
+          localStorage.removeItem("token");
+        }
         setAccountCreated(true);
       }
 
