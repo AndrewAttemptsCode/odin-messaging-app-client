@@ -30,17 +30,18 @@ const Container = styled.div`
 
 const ChatPage = () => {
   const navigate = useNavigate();
-  const { isAuthorized } = useContext(AuthContext);
+  const { isAuthorized, loading } = useContext(AuthContext);
 
   useEffect(() => {
+    if (loading) return;
+
     const storedToken = localStorage.getItem("token");
     
-    if (!storedToken) {
+    if (!storedToken || !isAuthorized) {
       navigate("/login");
     }
 
-    isAuthorized();
-  }, [isAuthorized, navigate]);
+  }, [isAuthorized, navigate, loading]);
 
   return (
     <Container>
