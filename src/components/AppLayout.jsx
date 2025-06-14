@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Logo from "./Logo";
 import AccountStatus from "./AccountStatus";
 import AuthProvider from "../contexts/AuthContext";
+import { ChatProvider } from "../contexts/ChatContext";
 
 const Container = styled.div`
   height: 100vh;
@@ -32,9 +33,11 @@ const AppLayout = () => {
           <Logo />
           <AccountStatus />
         </header>
-        <main>
-          <Outlet />
-        </main>
+        <ChatProvider>
+          <main>
+            <Outlet />
+          </main>
+        </ChatProvider>
       </Container>
     </AuthProvider>
   );
