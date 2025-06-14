@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { ChatContext } from "../contexts/ChatContext";
 
 const Container = styled.div`
   flex: 1;
@@ -7,10 +9,12 @@ const Container = styled.div`
 `
 
 const ChatConvo = () => {
+  const { chatMessages } = useContext(ChatContext);
+
   return (
     <Container>
-      {[...Array(100)].map((_, i) => (
-        <p key={i}>This is a test message { i + 1 }</p>
+      {chatMessages && chatMessages.map((message) => (
+        <p key={message.id}>{message.sender.username} - {message.createdAt} - {message.text}</p>
       ))}
     </Container>
   );
