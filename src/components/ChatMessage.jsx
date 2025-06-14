@@ -11,6 +11,7 @@ const Form = styled.form`
     resize: none;
     border-radius: 10px;
     padding: 0.5rem 4rem 0.5rem 0.5rem;
+    scrollbar-width: none;
   }
 
   button[type="submit"] {
