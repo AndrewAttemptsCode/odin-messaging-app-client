@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { ChatContext } from "../contexts/ChatContext";
 
 const ChatList = () => {
   const [chatUsers, setChatUsers] = useState([{ id: 0, username: "" }]);
   const [loading, setLoading] = useState(false);
   const { user } = useContext(AuthContext);
+  const { connectChat } = useContext(ChatContext);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -28,6 +30,7 @@ const ChatList = () => {
 
   const handleOnClick = (receiverId) => {
     console.log(`Sender Id: ${user.id}, Receiver Id: ${receiverId}`);
+    connectChat(user.id, receiverId);
   }
 
   if (loading) return <p>Loading...</p>;
