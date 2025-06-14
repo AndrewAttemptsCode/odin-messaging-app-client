@@ -4,7 +4,8 @@ export const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
   const [activeChat, setActiveChat] = useState({ sender: null, receiver: null });
-  
+  const [chatMessages, setChatMessages] = useState();
+
   const connectChat = async (senderId, receiverId) => {
     setActiveChat({ sender: senderId, receiver: receiverId });
     console.log("Active Chat:", activeChat);
@@ -18,6 +19,7 @@ export const ChatProvider = ({ children }) => {
       })
 
       const data = await response.json();
+      setChatMessages(data.messages);
       console.log(data);
 
     } catch(err) {
@@ -27,6 +29,7 @@ export const ChatProvider = ({ children }) => {
   
   const values = {
     connectChat,
+    chatMessages,
   }
 
   return (
