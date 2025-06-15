@@ -11,11 +11,11 @@ export const ChatProvider = ({ children }) => {
     console.log("Active Chat:", activeChat);
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/chats/${senderId}/${receiverId}`, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/chats/between/${senderId}/${receiverId}`, {
         method: "get",
         headers: {
           "Authorization": `Bearer ${token}`,
-        }
+        },
       })
 
       const data = await response.json();
