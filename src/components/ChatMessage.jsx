@@ -1,5 +1,7 @@
 import { Send } from "lucide-react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { ChatContext } from "../contexts/ChatContext";
 
 const Form = styled.form`
   background-color: red;
@@ -32,11 +34,63 @@ const TextAreaWrapper = styled.div`
 
 
 const ChatMessage = () => {
+  const [text, setText] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { activeChat } = useContext(ChatContext);
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+    }
+  }, [activeChat]);
+
+  const handleSubmit = async (event) => {
+    event?.preventDefault();
+    try {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/chats/${activeChat.chatId}/messages`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(
+          {
+            text,
+            senderId: activeChat.senderId,
+            receiverId: activeChat.receiverId,
+          }
+        ),
+      })
+
+      const data = await response.json();
+      console.log(data);
+      setText("");
+      textareaRef.current?.focus();
+
+    } catch (err) {
+      console.error("Failed to send message", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      if (text.trim()) {
+        event.preventDefault();
+        handleSubmit();
+      }
+    }
+  }
+
   return (
-    <Form action="" method="post">
+    <Form onSubmit={handleSubmit}>
       <TextAreaWrapper>
-        <textarea name="text" id="text" placeholder="Send a message..."></textarea>
-        <button type="submit"><Send /></button>
+        <textarea ref={textareaRef} onKeyDown={handleKeyDown} name="text" id="text" placeholder="Send a message..." value={text} onChange={(event) => setText(event.target.value)}></textarea>
+        <button type="submit" disabled={loading}><Send /></button>
       </TextAreaWrapper>
     </Form>
   );
