@@ -60,7 +60,6 @@ const ChatMessage = () => {
           {
             text,
             senderId: activeChat.senderId,
-            receiverId: activeChat.receiverId,
           }
         ),
       })
