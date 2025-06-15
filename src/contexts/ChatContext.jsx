@@ -3,15 +3,15 @@ import { createContext, useState } from "react";
 export const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
-  const [activeChat, setActiveChat] = useState({ sender: null, receiver: null });
+  const [activeChat, setActiveChat] = useState({ senderId: null, receiverId: null, chatId: null });
   const [chatMessages, setChatMessages] = useState();
 
   const connectChat = async (senderId, receiverId) => {
-    setActiveChat({ sender: senderId, receiver: receiverId });
+    setActiveChat({ senderId, receiverId });
     console.log("Active Chat:", activeChat);
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/chat/${senderId}/${receiverId}`, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/chats/${senderId}/${receiverId}`, {
         method: "get",
         headers: {
           "Authorization": `Bearer ${token}`,
@@ -20,6 +20,12 @@ export const ChatProvider = ({ children }) => {
 
       const data = await response.json();
       setChatMessages(data.messages);
+      setActiveChat((prev) => (
+        {
+          ...prev,
+          chatId: data.id,
+        }
+      ))
       console.log(data);
 
     } catch(err) {
@@ -30,6 +36,7 @@ export const ChatProvider = ({ children }) => {
   const values = {
     connectChat,
     chatMessages,
+    activeChat,
   }
 
   return (
