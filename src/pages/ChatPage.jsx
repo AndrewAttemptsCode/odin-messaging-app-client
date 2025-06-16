@@ -5,6 +5,7 @@ import ChatUserList from "../components/ChatUserList";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import ActiveConvoList from "../components/ActiveConvoList";
 
 const Container = styled.div`
   height: 100%;
@@ -46,6 +47,7 @@ const ChatPage = () => {
   return (
     <Container>
       <aside>
+        <ActiveConvoList />
         <ChatUserList />
       </aside>
       <main>
