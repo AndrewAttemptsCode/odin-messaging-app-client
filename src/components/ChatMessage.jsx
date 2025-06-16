@@ -36,7 +36,7 @@ const TextAreaWrapper = styled.div`
 const ChatMessage = () => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
-  const { activeChat } = useContext(ChatContext);
+  const { activeChat, connectChat } = useContext(ChatContext);
   const textareaRef = useRef(null);
 
   useEffect(() => {
@@ -67,6 +67,7 @@ const ChatMessage = () => {
       const data = await response.json();
       console.log(data);
       setText("");
+      connectChat(activeChat.senderId, activeChat.receiverId);
       textareaRef.current?.focus();
 
     } catch (err) {
