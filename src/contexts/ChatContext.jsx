@@ -1,10 +1,13 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
+import { AuthContext } from "./AuthContext";
 
 export const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
   const [activeChat, setActiveChat] = useState({ senderId: null, receiverId: null, chatId: null });
   const [chatMessages, setChatMessages] = useState();
+  const [activeConvos, setActiveConvos] = useState([]);
+  const { user } = useContext(AuthContext);
 
   const connectChat = async (senderId, receiverId) => {
     setActiveChat({ senderId, receiverId });
@@ -26,17 +29,42 @@ export const ChatProvider = ({ children }) => {
           chatId: data.id,
         }
       ))
+      fetchActiveConvos();
       console.log(data);
 
     } catch(err) {
       console.error("Error fetching chat", err);
     }
   }
+
+  const fetchActiveConvos = useCallback(async() => {
+    if (!user?.id) return;
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/chats/${user.id}`, {
+        method: "get",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+  
+      const data = await response.json();
+      console.log("fetch active chats:", data);
+      setActiveConvos(data);
+    } catch (error) {
+      console.error("Error fetching active convos:", error);
+    }
+  }, [user?.id]);
+
+  useEffect(() => {
+    fetchActiveConvos();
+  }, [fetchActiveConvos]);
   
   const values = {
     connectChat,
     chatMessages,
     activeChat,
+    activeConvos,
   }
 
   return (
