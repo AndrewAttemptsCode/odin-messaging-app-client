@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { AuthContext } from "../contexts/AuthContext";
 import capitalize from "../utils/capitalize";
 import { ChevronDown, LogOut, Settings } from "lucide-react";
+import UserAvatar from "./UserAvatar";
 
 const Container = styled.div`
   position: relative;
@@ -10,24 +11,27 @@ const Container = styled.div`
   gap: 0.5rem;
   align-items: center;
   padding: 0.5rem;
+  cursor: pointer;
 `
 
 const StatusWrapper = styled.div`
   display: flex;
+  align-items: center;
+  gap: 5px;
 `
 
 const DropMenu = styled.nav`
   position: absolute;
-  top: 115%;
+  top: 100%;
   right: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   background-color: red;
-  padding: 0.5rem;
-  gap: 0.5rem;
-  min-width: 120px;
+  padding: 1rem;
+  gap: 1rem;
+  min-width: 180px;
 `
 
 const MenuItem = styled.div`
@@ -42,6 +46,7 @@ const AccountStatus = () => {
   return (
     <Container onClick={() => setExpanded(!expanded)}>
       <StatusWrapper>
+        <UserAvatar />
         {capitalize(user.username)}
         <ChevronDown />
       </StatusWrapper>
