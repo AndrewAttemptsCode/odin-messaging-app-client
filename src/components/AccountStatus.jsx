@@ -9,7 +9,7 @@ const Container = styled.div`
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
 `
 
 const StatusWrapper = styled.div`
@@ -23,9 +23,11 @@ const DropMenu = styled.nav`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
   background-color: red;
   padding: 0.5rem;
   gap: 0.5rem;
+  min-width: 120px;
 `
 
 const MenuItem = styled.div`
