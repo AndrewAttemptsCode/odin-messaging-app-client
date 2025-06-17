@@ -13,7 +13,6 @@ const Container = styled.div`
 
   header {
     flex-shrink: 0;
-    padding: 0.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
