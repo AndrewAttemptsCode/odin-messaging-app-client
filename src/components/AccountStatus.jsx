@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { AuthContext } from "../contexts/AuthContext";
 import capitalize from "../utils/capitalize";
 import { ChevronDown, LogOut, Settings } from "lucide-react";
 import UserAvatar from "./UserAvatar";
+import { ChatContext } from "../contexts/ChatContext";
 
 const Container = styled.div`
   position: relative;
@@ -41,12 +42,15 @@ const MenuItem = styled.div`
 
 const AccountStatus = () => {
   const { user, logout } = useContext(AuthContext);
+  const { chatUsers } = useContext(ChatContext);
   const [expanded, setExpanded] = useState(false);
 
+  const userSettings = chatUsers?.find(chatUser => chatUser.id === user.id);
+  
   return (
     <Container onClick={() => setExpanded(!expanded)}>
       <StatusWrapper>
-        <UserAvatar />
+        <UserAvatar bg={userSettings?.avatarColor} username={user.username} />
         {capitalize(user.username)}
         <ChevronDown />
       </StatusWrapper>
