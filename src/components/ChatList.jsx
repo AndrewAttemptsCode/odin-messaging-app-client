@@ -18,30 +18,25 @@ const UserContainer = styled.div`
 `
 
 const ChatList = () => {
-  const [chatUsers, setChatUsers] = useState([{ id: 0, username: "", avatarColor: "", usernameColor: "" }]);
   const [loading, setLoading] = useState(false);
   const { user } = useContext(AuthContext);
-  const { connectChat } = useContext(ChatContext);
+  const { connectChat, chatUsers, fetchUsers } = useContext(ChatContext);
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const updateUsersList = async () => {
       try {
+        console.log("fetching fresh user list");
         setLoading(true);
-        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/users`, {
-        method: "get",
-      });
-
-        const data = await response.json();
-        setChatUsers(data);
-      } catch (error) {
-        console.error("Failed to fetch users", error);
+        await fetchUsers();
+      } catch (err) {
+        console.error("Failed to update users list", err);
       } finally {
+        console.log("Done fetching new user list");
         setLoading(false);
       }
-    };
-      
-    fetchUsers();
-  }, []);
+    }
+    updateUsersList();
+  }, [fetchUsers]);
 
   const handleOnClick = (receiverId) => {
     console.log(`Sender Id: ${user.id}, Receiver Id: ${receiverId}`);
