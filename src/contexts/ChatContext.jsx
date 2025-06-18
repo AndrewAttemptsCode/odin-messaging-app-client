@@ -4,10 +4,24 @@ import { AuthContext } from "./AuthContext";
 export const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
+  const [chatUsers, setChatUsers] = useState([]);
   const [activeChat, setActiveChat] = useState({ senderId: null, receiverId: null, chatId: null });
   const [chatMessages, setChatMessages] = useState();
   const [activeConvos, setActiveConvos] = useState([]);
   const { user } = useContext(AuthContext);
+
+  const fetchUsers = useCallback(async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/users`, {
+        method: "get",
+      });
+
+        const data = await response.json();
+        setChatUsers(data);
+      } catch (error) {
+        console.error("Failed to fetch users", error);
+      }
+    }, []);
 
   const connectChat = async (senderId, receiverId) => {
     setActiveChat({ senderId, receiverId });
@@ -58,13 +72,16 @@ export const ChatProvider = ({ children }) => {
 
   useEffect(() => {
     fetchActiveConvos();
-  }, [fetchActiveConvos]);
+    fetchUsers();
+  }, [fetchActiveConvos, fetchUsers]);
   
   const values = {
     connectChat,
     chatMessages,
     activeChat,
     activeConvos,
+    chatUsers,
+    fetchUsers,
   }
 
   return (
