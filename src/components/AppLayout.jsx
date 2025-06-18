@@ -28,11 +28,11 @@ const AppLayout = () => {
   return (
     <AuthProvider>
       <Container>
+        <ChatProvider>
         <header>
           <Logo />
           <AccountStatus />
         </header>
-        <ChatProvider>
           <main>
             <Outlet />
           </main>
