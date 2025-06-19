@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { ChatContext } from "../contexts/ChatContext";
+import ChatConvoMessage from "./ChatConvoMessage";
 
 const Container = styled.div`
   flex: 1;
@@ -21,7 +22,14 @@ const ChatConvo = () => {
   return (
     <Container ref={chatRef}>
       {chatMessages && chatMessages.map((message) => (
-        <p key={message.id}>{message.sender.username} - {message.createdAt} - {message.text}</p>
+        <ChatConvoMessage 
+          key={message.id}
+          username={message.sender.username}
+          createdAt={message.createdAt}
+          message={message.text}
+          avatarColor={message.sender.avatarColor}
+          usernameColor={message.sender.usernameColor}
+        />
       ))}
     </Container>
   );
