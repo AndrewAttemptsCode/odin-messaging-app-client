@@ -2,9 +2,10 @@ import { useContext, useState } from "react";
 import styled from "styled-components";
 import { AuthContext } from "../contexts/AuthContext";
 import capitalize from "../utils/capitalize";
-import { ChevronDown, LogOut, Settings } from "lucide-react";
+import { ChevronDown, LogOut, MessageSquareText, Settings } from "lucide-react";
 import UserAvatar from "./UserAvatar";
 import { ChatContext } from "../contexts/ChatContext";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   position: relative;
@@ -57,8 +58,12 @@ const AccountStatus = () => {
       {expanded && 
         <DropMenu>
           <MenuItem>
+            <MessageSquareText />
+            <p><Link to={"/"}>Chat</Link></p>
+          </MenuItem>
+          <MenuItem>
             <Settings />
-            <p>Settings</p>
+            <p><Link to={"settings"}>Settings</Link></p>
           </MenuItem>
           <MenuItem>
             <LogOut />
