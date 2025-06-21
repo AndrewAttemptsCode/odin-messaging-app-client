@@ -20,6 +20,11 @@ const AvatarWrapper = styled.div`
 const InfoContainer = styled.div`
   display: flex;
   gap: 10px;
+
+  p:first-of-type {
+    font-weight: bold;
+    color: ${({$usernameColor}) => $usernameColor};
+  }
 `
 
 const BodyContainer = styled.div`
@@ -43,7 +48,7 @@ const ChatConvoMessage = ({ username, createdAt, message, avatarColor, usernameC
         />
       </AvatarWrapper>
       <BodyContainer>
-        <InfoContainer>
+        <InfoContainer $usernameColor={usernameColor || "#333333"}>
           <p>{capitalize(username)}</p>
           <p>{formatDate(createdAt)}</p>
           <p>{formatTime(createdAt)}</p>
