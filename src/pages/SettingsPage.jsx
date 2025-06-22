@@ -47,6 +47,7 @@ const SettingsPage = () => {
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({ avatarColor: "#000000", usernameColor: "#000000" });
   const [load, setLoad] = useState(false);
+  const [notify, setNotify] = useState();
   
   const selectedUser = chatUsers?.find((chatUser) => chatUser.id === user.id);
 
@@ -94,15 +95,18 @@ const handleSubmit = async (event) => {
 
     if (!response.ok) {
       const errorData = await response.json();
+      setNotify({ message: "Error updating settings" });
       console.error("Update user settings response error", errorData);
       return;
     }
 
     const updatedUser = await response.json();
     fetchUsers();
+    setNotify(updatedUser);
     console.log("User settings updated", updatedUser);
 
   } catch (err) {
+    setNotify({ message: "Failed to connect to server" });
     console.error("Failed to update user settings", err);
   } finally {
     setLoad(false);
@@ -133,6 +137,7 @@ const handleSubmit = async (event) => {
           </FormItem>
           <button type="submit" disabled={load}>{load ? "Processing" : "Apply Changes"}</button>
         </Form>
+        {notify && <p>{notify.message}</p>}
       </SettingsWrapper>
     </Container>
   );
