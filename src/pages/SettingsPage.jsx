@@ -43,7 +43,7 @@ const FormItem = styled.div`
 
 const SettingsPage = () => {
   const { loading, isAuthorized, user } = useContext(AuthContext);
-  const { chatUsers } = useContext(ChatContext);
+  const { chatUsers, fetchUsers } = useContext(ChatContext);
   const navigate = useNavigate();
   const [userDetails, setUserDetails] = useState({ avatarColor: "#000000", usernameColor: "#000000" });
   const [load, setLoad] = useState(false);
@@ -99,6 +99,7 @@ const handleSubmit = async (event) => {
     }
 
     const updatedUser = await response.json();
+    fetchUsers();
     console.log("User settings updated", updatedUser);
 
   } catch (err) {
