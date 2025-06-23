@@ -4,6 +4,7 @@ import Logo from "./Logo";
 import AccountStatus from "./AccountStatus";
 import AuthProvider from "../contexts/AuthContext";
 import { ChatProvider } from "../contexts/ChatContext";
+import ChatMenuButton from "./ChatMenuButton";
 
 const Container = styled.div`
   height: 100vh;
@@ -30,6 +31,7 @@ const AppLayout = () => {
       <Container>
         <ChatProvider>
         <header>
+          <ChatMenuButton />
           <Logo />
           <AccountStatus />
         </header>
