@@ -18,7 +18,7 @@ const Container = styled.div`
     grid-area: aside;
     border: 2px solid blue;
     overflow-y: auto;
-    scrollbar-width: thin;
+    scrollbar-width: none;
   }
 
   main {
