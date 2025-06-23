@@ -9,6 +9,7 @@ export const ChatProvider = ({ children }) => {
   const [chatMessages, setChatMessages] = useState();
   const [activeConvos, setActiveConvos] = useState([]);
   const { user } = useContext(AuthContext);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const fetchUsers = useCallback(async () => {
       try {
@@ -97,6 +98,8 @@ export const ChatProvider = ({ children }) => {
     activeConvos,
     chatUsers,
     fetchUsers,
+    menuOpen,
+    setMenuOpen,
   }
 
   return (
