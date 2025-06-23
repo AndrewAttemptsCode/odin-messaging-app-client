@@ -10,11 +10,29 @@ import { ChatContext } from "../contexts/ChatContext";
 import { MessageSquareText } from "lucide-react";
 
 const Container = styled.div`
+  position: relative;
   height: 100%;
   display: grid;
   grid-template-columns: 200px 1fr;
   grid-template-areas: "aside main";
   border: 2px solid red;
+
+  @media (max-width: 769px) {
+    grid-template-columns: 1fr;
+    grid-template-areas: "main";
+
+    aside {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: white;
+      z-index: 10;
+      transform: ${({$menuOpen}) => $menuOpen ? "translateX(0)" : "translateX(-100%)"} ;
+      width: 200px;
+      height: 100%;
+      transition: transform 0.3s ease-in-out;
+    }
+  }
 
   aside {
     grid-area: aside;
@@ -42,7 +60,7 @@ const GetStartedContainer = styled.div`
 const ChatPage = () => {
   const navigate = useNavigate();
   const { isAuthorized, loading } = useContext(AuthContext);
-  const { activeChat } = useContext(ChatContext);
+  const { activeChat, menuOpen } = useContext(ChatContext);
 
   useEffect(() => {
     if (loading) return;
@@ -56,7 +74,7 @@ const ChatPage = () => {
   }, [isAuthorized, navigate, loading]);
 
   return (
-    <Container>
+    <Container $menuOpen={menuOpen}>
       <aside>
         <ActiveConvoList />
         <ChatUserList />
@@ -68,7 +86,7 @@ const ChatPage = () => {
             <h2> Select a user from the user list to start chatting!</h2>
           </GetStartedContainer>
         )}
-        
+
         {activeChat.chatId !== null && (
           <>
             <ChatConvo />
