@@ -34,6 +34,7 @@ const DropMenu = styled.nav`
   padding: 1rem;
   gap: 1rem;
   min-width: 180px;
+  z-index: 10;
 `
 
 const MenuItem = styled.div`
