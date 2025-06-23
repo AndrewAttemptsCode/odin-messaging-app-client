@@ -6,6 +6,8 @@ import { useContext, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import ActiveConvoList from "../components/ActiveConvoList";
+import { ChatContext } from "../contexts/ChatContext";
+import { MessageSquareText } from "lucide-react";
 
 const Container = styled.div`
   height: 100%;
@@ -29,9 +31,18 @@ const Container = styled.div`
   }
 `
 
+const GetStartedContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+`
+
 const ChatPage = () => {
   const navigate = useNavigate();
   const { isAuthorized, loading } = useContext(AuthContext);
+  const { activeChat } = useContext(ChatContext);
 
   useEffect(() => {
     if (loading) return;
@@ -51,8 +62,19 @@ const ChatPage = () => {
         <ChatUserList />
       </aside>
       <main>
-        <ChatConvo />
-        <ChatMessage />
+        {activeChat.chatId === null && (
+          <GetStartedContainer>
+            <MessageSquareText size={150}/>
+            <h2> Select a user from the user list to start chatting!</h2>
+          </GetStartedContainer>
+        )}
+        
+        {activeChat.chatId !== null && (
+          <>
+            <ChatConvo />
+            <ChatMessage />
+          </>
+        )}
       </main>
     </Container>
   );
