@@ -16,6 +16,11 @@ export const ChatProvider = ({ children }) => {
         method: "get",
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch users");
+      }
+
         const data = await response.json();
         setChatUsers(data);
       } catch (error) {
@@ -34,6 +39,11 @@ export const ChatProvider = ({ children }) => {
           "Authorization": `Bearer ${token}`,
         },
       })
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error fetching chat");
+      }
 
       const data = await response.json();
       setChatMessages(data.messages);
@@ -61,6 +71,11 @@ export const ChatProvider = ({ children }) => {
           "Authorization": `Bearer ${token}`,
         },
       });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch active convos");
+      }
   
       const data = await response.json();
       console.log("fetch active chats:", data);
