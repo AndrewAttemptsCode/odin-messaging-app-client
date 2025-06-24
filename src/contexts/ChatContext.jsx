@@ -55,6 +55,7 @@ export const ChatProvider = ({ children }) => {
         }
       ))
       fetchActiveConvos();
+      setMenuOpen(false);
       console.log(data);
 
     } catch(err) {
