@@ -40,6 +40,11 @@ const DropMenu = styled.nav`
 const MenuItem = styled.div`
   display: flex;
   gap: 0.5rem;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 `
 
 const AccountStatus = () => {
