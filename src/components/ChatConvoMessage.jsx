@@ -44,7 +44,7 @@ const ChatConvoMessage = ({ username, createdAt, message, avatarColor, usernameC
         <UserAvatar
           bg={avatarColor}
           username={username}
-          size={60}
+          size={40}
         />
       </AvatarWrapper>
       <BodyContainer>
