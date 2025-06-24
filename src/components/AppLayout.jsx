@@ -25,14 +25,21 @@ const Container = styled.div`
   }
 `
 
+const MenuLogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const AppLayout = () => {
   return (
     <AuthProvider>
       <Container>
         <ChatProvider>
         <header>
-          <ChatMenuButton />
-          <Logo />
+          <MenuLogoWrapper>
+            <ChatMenuButton />
+            <Logo />
+          </MenuLogoWrapper>
           <AccountStatus />
         </header>
           <main>
