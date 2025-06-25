@@ -57,6 +57,10 @@ const GetStartedContainer = styled.div`
   align-items: center;
   min-height: 100%;
   text-align: center;
+
+  h2 {
+    color: #191970;
+  }
 `
 
 const ChatPage = () => {

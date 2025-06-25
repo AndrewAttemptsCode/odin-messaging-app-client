@@ -17,6 +17,10 @@ const MessageWrapper = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+
+  h2 {
+    color: #191970;
+  }
 `
 
 const ChatConvo = () => {
