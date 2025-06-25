@@ -15,6 +15,12 @@ const UserContainer = styled.div`
   align-items: center;
   gap: 5px;
   padding: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: #B0C4DE;
+  }
 `
 
 const ConvoList = () => {

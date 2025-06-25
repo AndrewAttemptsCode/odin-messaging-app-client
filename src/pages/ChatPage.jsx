@@ -15,7 +15,6 @@ const Container = styled.div`
   display: grid;
   grid-template-columns: 200px 1fr;
   grid-template-areas: "aside main";
-  border: 2px solid red;
 
   @media (max-width: 769px) {
     grid-template-columns: 1fr;
@@ -36,16 +35,18 @@ const Container = styled.div`
 
   aside {
     grid-area: aside;
-    border: 2px solid blue;
+    background-color: #F8F8FF;
+    color: #333333;
+    border-right: 2px solid #9370DB;
     overflow-y: auto;
     scrollbar-width: none;
   }
 
   main {
     grid-area: main;
-    border: 2px solid green;
     display: flex;
     flex-direction: column;
+    background-color: #F8F8FF;
   }
 `
 

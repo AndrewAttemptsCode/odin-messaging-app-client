@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { ChatContext } from "../contexts/ChatContext";
 
 const Form = styled.form`
-  background-color: red;
   padding: 1rem;
   
   textarea {
@@ -14,6 +13,12 @@ const Form = styled.form`
     border-radius: 10px;
     padding: 0.5rem 4rem 0.5rem 0.5rem;
     scrollbar-width: none;
+    background-color: #F8F8FF;
+    border: 1px solid #9370DB;
+
+    &:focus {
+      outline: 2px solid #9370DB;
+    }
   }
 
   button[type="submit"] {
@@ -24,6 +29,22 @@ const Form = styled.form`
     padding: 0.5rem;
     border-radius: 50%;
     cursor: pointer;
+    border: 2px solid #9370DB;
+    background-color: transparent;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #9370DB;
+    }
+
+    svg {
+      color: #9370DB;
+      transition: color 0.3s ease-in-out
+    }
+
+    &:hover svg {
+      color: #F8F8FF;
+    }
   }
 `
 
