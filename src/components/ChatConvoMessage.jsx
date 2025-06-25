@@ -18,11 +18,17 @@ const AvatarWrapper = styled.div`
 
 const InfoContainer = styled.div`
   display: flex;
+  align-items: center;
   gap: 10px;
 
   p:first-of-type {
     font-weight: bold;
     color: ${({$usernameColor}) => $usernameColor};
+  }
+
+  p:not(:first-of-type) {
+    color: #708090;
+    font-size: 0.8rem;
   }
 `
 
@@ -34,6 +40,12 @@ const BodyContainer = styled.div`
 const MessageContainer = styled.div`
   display: flex;
   white-space: pre-wrap;
+  color: #333333;
+
+  @media (max-width: 424px) {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
 `
 
 const ChatConvoMessage = ({ username, createdAt, message, avatarColor, usernameColor }) => {
