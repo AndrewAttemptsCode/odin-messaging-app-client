@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 const StyledMenu = styled(Menu)`
   cursor: pointer;
   margin: 0.5rem;
+  color: #191970;
 
   @media (min-width: 770px) {
     display: none;

@@ -9,6 +9,10 @@ const Header = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+
+  h1 {
+    color: #191970;
+  }
 `
 
 const IconWrapper = styled.div`

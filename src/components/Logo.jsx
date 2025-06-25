@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Container = styled.div`
-  color: blueviolet;
+  color: #191970;
   font-size: 1.5rem;
   font-weight: bold;
   padding: 0.5rem;
