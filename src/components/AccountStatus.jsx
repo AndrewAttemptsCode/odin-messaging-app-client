@@ -23,7 +23,7 @@ const StatusWrapper = styled.div`
 
   p {
     color: #333333;
-    
+
     @media (max-width: 424px) {
       display: none;
     }
@@ -38,9 +38,8 @@ const DropMenu = styled.nav`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  background-color: red;
-  padding: 1rem;
-  gap: 1rem;
+  background-color: #F8F8FF;
+  border: 2px solid #9370DB;
   min-width: 180px;
   z-index: 10;
 `
@@ -48,10 +47,17 @@ const DropMenu = styled.nav`
 const MenuItem = styled.div`
   display: flex;
   gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  color: #333333;
 
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  &:hover {
+    background-color: #B0C4DE;
   }
 `
 
