@@ -20,6 +20,14 @@ const StatusWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+
+  p {
+    color: #333333;
+    
+    @media (max-width: 424px) {
+      display: none;
+    }
+  }
 `
 
 const DropMenu = styled.nav`
@@ -58,7 +66,7 @@ const AccountStatus = () => {
     <Container onClick={() => setExpanded(!expanded)}>
       <StatusWrapper>
         <UserAvatar bg={userSettings?.avatarColor} username={user.username} />
-        {capitalize(user.username)}
+        <p>{capitalize(user.username)}</p>
         <ChevronDown />
       </StatusWrapper>
       {expanded && 
