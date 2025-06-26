@@ -3,13 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
-  min-width: 320px;
   max-width: 300px;
-  width: 100%;
-  padding: 2rem;
-  background-color: cadetblue;
+  width: 90%;
+  padding: max(2%, 1rem);
+  color: #333333;
+  background-color: #F5F5F5;
   border-radius: 10px;
-  box-shadow: 0 0 10px 5px #038620;
+  box-shadow: 0 0 5px 5px #9370DB;
 
   h1 {
     padding: 0;
@@ -17,6 +17,7 @@ const Container = styled.div`
     line-height: 1.0;
     text-align: center;
     margin-bottom: 2rem;
+    color: #191970;
   }
 `
 
@@ -24,14 +25,14 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
 
-  input, button {
+  input {
     padding: 8px;
     width: 100%;
     border: none;
   }
 
   input:focus {
-    outline: 2px solid #038620;
+    outline: 2px solid #9370DB;
   }
 `
 
@@ -60,11 +61,21 @@ const InputWrapper = styled.div`
   }
 `
 
+const SubmitButton = styled.button`
+  border: ${({$isFilled}) => ($isFilled ? "2px solid #9370DB" : "2px solid transparent")};
+  padding: 8px;
+  width: 100%;
+  cursor: pointer;
+  transition: border 0.3s ease-in-out;
+`
+
 const LoginForm = () => {
   const [userData, setUserData] = useState({username: "", password: ""});
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([{}]);
   const navigate = useNavigate();
+
+  const isFilled = userData.username.trim() !== "" && userData.password.trim() !== "";
 
   const handleOnChange = (event) => {
     const { name, value } = event.target;
@@ -123,7 +134,7 @@ const LoginForm = () => {
           <p>{ errors?.find(error => error.path === "general")?.msg }</p>
         </InputWrapper>
         <p>Need an account? <Link to={"/register"}>Register</Link></p>
-        <button type="submit" disabled={loading}>{ loading ? "Processing..." : "Login" }</button>
+        <SubmitButton type="submit" disabled={loading} $isFilled={isFilled}>{ loading ? "Processing..." : "Login" }</SubmitButton>
       </Form>
     </Container>
   );
