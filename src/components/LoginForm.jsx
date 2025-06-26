@@ -69,6 +69,10 @@ const SubmitButton = styled.button`
   transition: border 0.3s ease-in-out;
 `
 
+const ErrorStyles = styled.p`
+  color: #F08080;
+`
+
 const LoginForm = () => {
   const [userData, setUserData] = useState({username: "", password: ""});
   const [loading, setLoading] = useState(false);
@@ -125,13 +129,13 @@ const LoginForm = () => {
         <InputWrapper>
           <input type="text" name="username" id="username" placeholder="" value={userData.username} onChange={handleOnChange} />
           <label htmlFor="username">Username</label>
-        <p>{ errors?.find(error => error.path === "username")?.msg }</p>
+        <ErrorStyles>{ errors?.find(error => error.path === "username")?.msg }</ErrorStyles>
         </InputWrapper>
         <InputWrapper>
           <input type="password" name="password" id="password" placeholder="" value={userData.password} onChange={handleOnChange} />
           <label htmlFor="password">Password</label>
-          <p>{ errors?.find(error => error.path === "password")?.msg }</p>
-          <p>{ errors?.find(error => error.path === "general")?.msg }</p>
+          <ErrorStyles>{ errors?.find(error => error.path === "password")?.msg }</ErrorStyles>
+          <ErrorStyles>{ errors?.find(error => error.path === "general")?.msg }</ErrorStyles>
         </InputWrapper>
         <p>Need an account? <Link to={"/register"}>Register</Link></p>
         <SubmitButton type="submit" disabled={loading} $isFilled={isFilled}>{ loading ? "Processing..." : "Login" }</SubmitButton>
