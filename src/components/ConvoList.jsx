@@ -23,6 +23,10 @@ const UserContainer = styled.div`
   }
 `
 
+const NoChatsContainer = styled.p`
+  text-align: center;
+`
+
 const ConvoList = () => {
   const { activeConvos, connectChat } = useContext(ChatContext);
   const { user } = useContext(AuthContext);
@@ -32,7 +36,7 @@ const ConvoList = () => {
   }
 
   if (activeConvos.length === 0) {
-    return <p>No chats found</p>
+    return <NoChatsContainer>No active chats found</NoChatsContainer>
   }
 
   return (

@@ -23,6 +23,10 @@ const UserContainer = styled.div`
   }
 `
 
+const LoadingContainer = styled.p`
+  text-align: center;
+`
+
 const ChatList = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useContext(AuthContext);
@@ -49,7 +53,7 @@ const ChatList = () => {
     connectChat(user.id, receiverId);
   }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingContainer>Loading users...</LoadingContainer>;
 
   return (
     <Container>
