@@ -11,13 +11,17 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid red;
+  background-color: #F8F8FF;
+  color: #333333;
 `
 
 const SettingsWrapper = styled.div`
-  width: 100%;
+  width: 90%;
   max-width: 1200px;
-  border: 1px solid blue;
+
+  h1, h2 {
+    color: #191970;
+  }
 `
 
 const Form = styled.form`
@@ -25,6 +29,19 @@ const Form = styled.form`
   flex-direction: column;
   max-width: fit-content;
   gap: 1rem;
+
+  button {
+    background-color: transparent;
+    border: 2px solid #9370DB;
+    color: #333333;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+
+  button:hover {
+    background-color: #9370DB;
+    color: #F8F8FF;
+  }
 `
 
 const FormItem = styled.div`
@@ -39,6 +56,10 @@ const FormItem = styled.div`
     border: none;
     cursor: pointer;
   }
+`
+
+const Notify = styled.p`
+  color: #F08080;
 `
 
 const SettingsPage = () => {
@@ -137,7 +158,7 @@ const handleSubmit = async (event) => {
           </FormItem>
           <button type="submit" disabled={load}>{load ? "Processing" : "Apply Changes"}</button>
         </Form>
-        {notify && <p>{notify.message}</p>}
+        {notify && <Notify>{notify.message}</Notify>}
       </SettingsWrapper>
     </Container>
   );
