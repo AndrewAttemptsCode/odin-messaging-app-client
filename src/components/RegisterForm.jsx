@@ -127,6 +127,7 @@ const RegisterForm = () => {
 
     } catch (error) {
       console.error("Failed to create user", error);
+      setErrors([{ path: "general", msg: "Server connection error" }]);
     } finally {
       setLoading(false);
     }

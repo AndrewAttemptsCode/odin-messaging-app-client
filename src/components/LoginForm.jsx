@@ -117,6 +117,7 @@ const LoginForm = () => {
 
     } catch (error) {
       console.error("Error logging in", error);
+      setErrors([{ path: "general", msg: "Server connection error" }]);
     } finally {
       setLoading(false);
     }
