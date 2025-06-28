@@ -53,12 +53,19 @@ const TextAreaWrapper = styled.div`
   width: 100%;
 `
 
+const ErrorStyles = styled.p`
+  color: #F08080;
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0.5rem;
+`
 
 const ChatMessage = () => {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
   const { activeChat, connectChat } = useContext(ChatContext);
   const textareaRef = useRef(null);
+  const [errors, setErrors] = useState([{}]);
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -85,14 +92,21 @@ const ChatMessage = () => {
         ),
       })
 
+      if (!response.ok) {
+        console.error("Failed to send message");
+        setErrors([{ path: "general", msg: "Failed to send message" }]);
+      }
+
       const data = await response.json();
       console.log(data);
       setText("");
+      setErrors([{}]);
       connectChat(activeChat.senderId, activeChat.receiverId);
       textareaRef.current?.focus();
 
     } catch (err) {
       console.error("Failed to send message", err);
+      setErrors([{ path: "general", msg: "Failed to send message" }]);
     } finally {
       setLoading(false);
     }
@@ -112,6 +126,9 @@ const ChatMessage = () => {
       <TextAreaWrapper>
         <textarea ref={textareaRef} onKeyDown={handleKeyDown} name="text" id="text" placeholder="Send a message..." value={text} onChange={(event) => setText(event.target.value)}></textarea>
         <button type="submit" disabled={loading}><Send /></button>
+        <ErrorStyles>
+          {errors?.find(error => error.path === "general")?.msg}
+        </ErrorStyles>
       </TextAreaWrapper>
     </Form>
   );
