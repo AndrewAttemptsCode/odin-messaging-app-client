@@ -35,13 +35,11 @@ const ChatList = () => {
   useEffect(() => {
     const updateUsersList = async () => {
       try {
-        console.log("fetching fresh user list");
         setLoading(true);
         await fetchUsers();
       } catch (err) {
         console.error("Failed to update users list", err);
       } finally {
-        console.log("Done fetching new user list");
         setLoading(false);
       }
     }
@@ -49,7 +47,6 @@ const ChatList = () => {
   }, [fetchUsers]);
 
   const handleOnClick = (receiverId) => {
-    console.log(`Sender Id: ${user.id}, Receiver Id: ${receiverId}`);
     connectChat(user.id, receiverId);
   }
 

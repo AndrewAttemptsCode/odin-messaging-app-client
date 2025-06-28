@@ -124,7 +124,6 @@ const handleSubmit = async (event) => {
     const updatedUser = await response.json();
     fetchUsers();
     setNotify(updatedUser);
-    console.log("User settings updated", updatedUser);
 
   } catch (err) {
     setNotify({ message: "Failed to connect to server" });

@@ -31,7 +31,6 @@ export const ChatProvider = ({ children }) => {
 
   const connectChat = async (senderId, receiverId) => {
     setActiveChat({ senderId, receiverId });
-    console.log("Active Chat:", activeChat);
     try {
       const token = localStorage.getItem("token");
       const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/chats/between/${senderId}/${receiverId}`, {
@@ -56,7 +55,6 @@ export const ChatProvider = ({ children }) => {
       ))
       fetchActiveConvos();
       setMenuOpen(false);
-      console.log(data);
 
     } catch(err) {
       console.error("Error fetching chat", err);
@@ -80,7 +78,6 @@ export const ChatProvider = ({ children }) => {
       }
   
       const data = await response.json();
-      console.log("fetch active chats:", data);
       setActiveConvos(data);
     } catch (error) {
       console.error("Error fetching active convos:", error);

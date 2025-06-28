@@ -98,7 +98,6 @@ const ChatMessage = () => {
       }
 
       const data = await response.json();
-      console.log(data);
       setText("");
       setErrors([{}]);
       connectChat(activeChat.senderId, activeChat.receiverId);
